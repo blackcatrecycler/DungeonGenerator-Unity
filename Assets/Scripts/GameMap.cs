@@ -56,10 +56,10 @@ public class GameMap
                 if (i != (s.posy + s.height)) gmap[i][j].bottom = ConstNum.ROOM;
                 if (j != s.posx) gmap[i][j].left = ConstNum.ROOM;
                 if (j != (s.posx + s.length)) gmap[i][j].right = ConstNum.ROOM;
-                if ((gmap[i][j].top == ConstNum.ROOM) && (gmap[i][j].left == ConstNum.ROOM)) gmap[i][j].leftTop = ConstNum.ROOM;
-                if ((gmap[i][j].top == ConstNum.ROOM) && (gmap[i][j].left == ConstNum.ROOM)) gmap[i][j].leftTop = ConstNum.ROOM;
-                if ((gmap[i][j].top == ConstNum.ROOM) && (gmap[i][j].left == ConstNum.ROOM)) gmap[i][j].leftTop = ConstNum.ROOM;
-                if ((gmap[i][j].top == ConstNum.ROOM) && (gmap[i][j].left == ConstNum.ROOM)) gmap[i][j].leftTop = ConstNum.ROOM;
+                if ((gmap[i][j].top == ConstNum.ROOM) && (gmap[i][j].left == ConstNum.ROOM)) gmap[i][j].leftTop = ConstNum.ROOM_LEFT_TOP;
+                if ((gmap[i][j].top == ConstNum.ROOM) && (gmap[i][j].right == ConstNum.ROOM)) gmap[i][j].rightTop = ConstNum.ROOM;
+                if ((gmap[i][j].bottom == ConstNum.ROOM) && (gmap[i][j].left == ConstNum.ROOM)) gmap[i][j].leftBottom = ConstNum.ROOM;
+                if ((gmap[i][j].bottom == ConstNum.ROOM) && (gmap[i][j].right == ConstNum.ROOM)) gmap[i][j].rightBotton = ConstNum.ROOM_RIGHT_BOTTOM;
             }
 
     }
@@ -150,7 +150,7 @@ public class GameMap
             }
             if (flag)
             {
-                block = RandomTool<Block>.RollItem(ref usefulBlocks, rd);
+                block = RandomTool<Block>.RollItem(ref usefulBlocks, ref rd);
             }
             else usefulBlocks.Remove(block);
             //找一个格子进行搜索，如果找不到现有连接那么随机掷一个
@@ -168,7 +168,7 @@ public class GameMap
                     if (gmap[block.y][block.x + 1].block == ConstNum.WALL) bk.Add(gmap[block.y][block.x + 1]);
                 if (bk.Count != 0)
                 {
-                    Block temp = RandomTool<Block>.RollItem(ref bk, rd);
+                    Block temp = RandomTool<Block>.RollItem(ref bk, ref rd);
                     usefulBlocks.Remove(temp);
                     gmap[temp.y][temp.x].block = ConstNum.ROAD;
                     if (temp.x == block.x)
@@ -235,8 +235,8 @@ public class GameMap
         for (int i = 0; i < roomCount; i++)
         {
             int temp1 = 0, temp2 = 0, temp3 = 0, temp4 = 0;
-            RandomTool.Roll(ref temp1, ref temp2, width, 3, 6, rd);
-            RandomTool.Roll(ref temp3, ref temp4, length, 3, 6, rd);
+            RandomTool.Roll(ref temp1, ref temp2, width, 3, 6, ref rd);
+            RandomTool.Roll(ref temp3, ref temp4, length, 3, 6, ref rd);
             CheckRoom(new Rooms(temp3, temp1, temp4, temp2));
         }
     }

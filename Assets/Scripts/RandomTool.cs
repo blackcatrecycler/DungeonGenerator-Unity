@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 static class RandomTool
 {
     /// <summary>
@@ -13,13 +14,13 @@ static class RandomTool
     /// <param name="miny">the minimam of y</param>
     /// <param name="maxy">the maxmam of y</param>
     /// <param name="rd">Random seed</param>
-    public static void Roll(ref int x, ref int y, int All, int miny, int maxy, System.Random rd)
+    public static void Roll(ref int x, ref int y, int All, int miny, int maxy, ref System.Random rd)
     {
         y = rd.Next(miny, maxy);
         x = rd.Next(0, All - y);
     }
 
-    public static int Roll(int x, int y, System.Random rd)
+    public static int Roll(int x, int y, ref System.Random rd)
     {
         return rd.Next(x, y);
     }
@@ -33,11 +34,13 @@ static class RandomTool<T>
     /// <param name="a">List</param>
     /// <param name="rd">Random seed</param>
     /// <returns></returns>
-    public static T RollItem(ref List<T> a, System.Random rd)
+    public static T RollItem(ref List<T> a, ref System.Random rd)
     {
 
         T m = default(T);
-        int se = rd.Next(0, a.Count - 1);
+        int se = rd.Next(0, a.Count);
+        //Debug.Log("Count:" + a.Count);
+        //Debug.Log("Roll :" + se);
         m = a[se];
         a.Remove(m);
         return m;
